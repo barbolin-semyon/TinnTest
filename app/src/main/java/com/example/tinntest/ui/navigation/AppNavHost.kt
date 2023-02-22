@@ -5,6 +5,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.tinntest.ui.features.RegisterScreen
 import com.example.tinntest.ui.features.SignInScreen
 
 @Composable
@@ -15,7 +16,7 @@ fun AppNavHost(navController: NavHostController, startDestination: String) {
         }
 
         composable(Screens.Registration.route) {
-
+            RegisterScreen(navController)
         }
 
         composable(Screens.ConfirmEmail.route) {
