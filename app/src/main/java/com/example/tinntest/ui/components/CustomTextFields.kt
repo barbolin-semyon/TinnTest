@@ -1,19 +1,22 @@
 package com.example.tinntest.ui.components
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
-import com.example.tinntest.ui.theme.Gray
 import com.example.tinntest.utils.emailIfValid
 import com.example.tinntest.R
+import com.example.tinntest.ui.theme.Alpha
 import com.example.tinntest.ui.theme.Blue
 import com.example.tinntest.ui.theme.DarkGray
 
@@ -28,28 +31,30 @@ fun TextFieldsWithLabelError(
     isError: Boolean = false,
     keyboardOptions: KeyboardOptions = KeyboardOptions()
 ) {
-    OutlinedTextField(
-        value = value,
-        onValueChange = { text -> onValueChange(text) },
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp),
-        colors = TextFieldDefaults.textFieldColors(
-            backgroundColor = Gray
-        ),
-        trailingIcon = { rightIcon() },
-        label = { Text(labelText) },
-        keyboardOptions = keyboardOptions,
-        visualTransformation = visualTransformation,
-        isError = isError
-    )
-
-    if (isError) {
-        Text(
-            text = errorText,
-            color = MaterialTheme.colors.secondary,
-            modifier = Modifier.padding(start = 8.dp)
+    Column {
+        TextField(
+            value = value,
+            onValueChange = { text -> onValueChange(text) },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp, start = 40.dp, end = 40.dp),
+            colors = TextFieldDefaults.textFieldColors(
+                backgroundColor = Alpha
+            ),
+            trailingIcon = { rightIcon() },
+            label = { Text(labelText) },
+            keyboardOptions = keyboardOptions,
+            visualTransformation = visualTransformation,
+            isError = isError
         )
+
+        if (isError) {
+            Text(
+                text = errorText,
+                color = MaterialTheme.colors.error,
+                modifier = Modifier.padding(start = 40.dp)
+            )
+        }
     }
 }
 
@@ -83,7 +88,7 @@ fun TextFieldPassword(
                 Icon(
                     painter = painterResource(id = R.drawable.ic_eye),
                     contentDescription = "Показать пароль",
-                    tint = if (isShowPassword) DarkGray else Blue
+                    tint = if (!isShowPassword) DarkGray else Blue
                 )
             }
         },
