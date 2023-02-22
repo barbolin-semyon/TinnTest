@@ -5,6 +5,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 
 
 private val LightColorPalette = lightColors(
@@ -14,7 +15,7 @@ private val LightColorPalette = lightColors(
 
 @Composable
 fun TinnTestTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
-    LightColorPalette
+    val colors = LightColorPalette
 
     MaterialTheme(
         colors = colors,
