@@ -22,7 +22,7 @@ class MainActivity : ComponentActivity() {
                     "authorization", MODE_PRIVATE
                 ).getBoolean("isConfirmEmail", false)
 
-                val startDestination = if (token != "") {
+                val startDestination = if (token == "") {
                     Screens.SignIn.route
                 } else {
                     if (isConfirmEmail) {
