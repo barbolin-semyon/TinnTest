@@ -3,6 +3,7 @@ package com.example.tinntest.data.networkService
 import com.example.tinntest.data.modelForJSON.*
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.Header
 import retrofit2.http.POST
 
 interface AuthorizationService {
@@ -13,5 +14,8 @@ interface AuthorizationService {
     fun login(@Body signInModel: SignInModel): Call<ResponceModel>
 
     @POST("verification/email")
-    fun verificationEmail(@Body verificationModel: VerificationModel): Call<ResponceVerificationModel>
+    fun verificationEmail(
+        @Body verificationModel: VerificationModel,
+        @Header("Authorization") token: String
+    ): Call<ResponceVerificationModel>
 }
