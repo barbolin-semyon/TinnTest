@@ -18,7 +18,6 @@ import com.example.tinntest.utils.EMAIL_IS_CONFIRMATION
 import com.example.tinntest.utils.TOKEN
 import com.example.tinntest.viewModel.ErrorObserver
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

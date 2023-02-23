@@ -11,7 +11,6 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import retrofit2.Callback
 import kotlinx.coroutines.launch
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
 
@@ -58,7 +57,7 @@ class AuthorizationViewModel : ViewModel() {
                         } else {
                             val gson = Gson()
                             val type = object : TypeToken<ResponceModel>() {}.type
-                            var errorResponse: ResponceModel? =
+                            val errorResponse: ResponceModel? =
                                 gson.fromJson(response.errorBody()!!.charStream(), type)
 
                             val data = errorResponse!!.data
