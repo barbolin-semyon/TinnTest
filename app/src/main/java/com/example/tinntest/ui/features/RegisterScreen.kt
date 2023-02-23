@@ -52,7 +52,7 @@ fun RegisterScreen(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Text(text = "Авторизация", style = MaterialTheme.typography.h5)
+        Text(text = "Регистрация", style = MaterialTheme.typography.h5)
 
         var email by remember { mutableStateOf("") }
         var password by remember { mutableStateOf("") }
