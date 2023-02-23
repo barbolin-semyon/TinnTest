@@ -1,8 +1,11 @@
 package com.example.tinntest.data.modelForJSON
 
+import com.google.gson.annotations.SerializedName
+
 data class RegisterModel (
     val email: String,
     val password: String,
+    @SerializedName("password_confirmation")
     val passwordConfirmation: String,
     val code: String
 )
