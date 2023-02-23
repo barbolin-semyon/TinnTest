@@ -35,15 +35,21 @@ import com.example.tinntest.viewModel.AuthorizationViewModel
 fun SignInScreen(navHostController: NavHostController) {
     val viewModel = viewModel(AuthorizationViewModel::class.java)
 
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    var isRememberUser by remember { mutableStateOf(false) }
+
     val token by viewModel.token.observeAsState()
     if (token != "") {
-        val context = LocalContext.current
-        val pref = context.applicationContext.getSharedPreferences (
-            AUTHORIZATION,
-            Context.MODE_PRIVATE
-        )
-        pref.edit().putString(TOKEN, token).apply()
-        pref.edit().putBoolean(EMAIL_IS_CONFIRMATION, true).apply()
+        if (isRememberUser) {
+            val context = LocalContext.current
+            val pref = context.applicationContext.getSharedPreferences (
+                AUTHORIZATION,
+                Context.MODE_PRIVATE
+            )
+            pref.edit().putString(TOKEN, token).apply()
+            pref.edit().putBoolean(EMAIL_IS_CONFIRMATION, true).apply()
+        }
 
         navHostController.navigate(Screens.Main.route) {
             popUpTo(navHostController.graph.startDestinationId) {
@@ -60,10 +66,6 @@ fun SignInScreen(navHostController: NavHostController) {
         verticalArrangement = Arrangement.Center
     ) {
         Text(text = "Авторизация", style = MaterialTheme.typography.h5)
-
-        var email by remember { mutableStateOf("") }
-        var password by remember { mutableStateOf("") }
-        var isRememberUser by remember { mutableStateOf(false) }
 
         TextFieldEmail(email = email, onValueChange = { email = it })
 
