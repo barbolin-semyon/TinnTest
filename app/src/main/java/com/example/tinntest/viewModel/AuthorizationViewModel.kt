@@ -7,8 +7,11 @@ import androidx.lifecycle.viewModelScope
 import com.example.tinntest.data.modelForJSON.*
 import com.example.tinntest.data.networkService.AuthorizationService
 import com.example.tinntest.data.networkService.RetrofitClient
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import retrofit2.Callback
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
 
@@ -30,21 +33,16 @@ class AuthorizationViewModel : ViewModel() {
     fun signIn(email: String, password: String) = viewModelScope.launch {
         db.login(SignInModel(email, password)).enqueue(object : Callback<ResponceModel> {
             override fun onResponse(call: Call<ResponceModel>, response: Response<ResponceModel>) {
-                response.body()?.let { body ->
-                    if (body.success) {
-                        _token.value = body.data.token
-                    } else {
-                        val data = body.data
-                        showArrayError(data.email)
-                        showArrayError(data.password)
-                    }
+                if (response.body() != null) {
+                    _token.value = response.body()!!.data.token
+                } else {
+                    ErrorObserver.showErrorMessage("Пользователь не авторизован")
                 }
             }
 
             override fun onFailure(call: Call<ResponceModel>, t: Throwable) {
                 ErrorObserver.showErrorMessage(t.message.toString())
             }
-
         })
     }
 
@@ -55,17 +53,20 @@ class AuthorizationViewModel : ViewModel() {
                     call: Call<ResponceModel>,
                     response: Response<ResponceModel>
                 ) {
-                    response.body()?.let { body ->
-                        if (body.success) {
-                            _token.value = body.data.token
+                        if (response.body() != null) {
+                            _token.value = response.body()!!.data.token
                         } else {
-                            val data = body.data
+                            val gson = Gson()
+                            val type = object : TypeToken<ResponceModel>() {}.type
+                            var errorResponse: ResponceModel? =
+                                gson.fromJson(response.errorBody()!!.charStream(), type)
+
+                            val data = errorResponse!!.data
                             showArrayError(data.email)
                             showArrayError(data.password)
                             showArrayError(data.code)
                         }
                     }
-                }
 
                 override fun onFailure(call: Call<ResponceModel>, t: Throwable) {
                     ErrorObserver.showErrorMessage(t.message.toString())
