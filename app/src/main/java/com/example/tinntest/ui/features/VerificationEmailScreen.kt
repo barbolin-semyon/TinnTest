@@ -21,6 +21,9 @@ import com.example.tinntest.R
 import com.example.tinntest.ui.components.AppButton
 import com.example.tinntest.ui.components.TextFieldsWithLabelError
 import com.example.tinntest.ui.navigation.Screens
+import com.example.tinntest.utils.AUTHORIZATION
+import com.example.tinntest.utils.EMAIL_IS_CONFIRMATION
+import com.example.tinntest.utils.TOKEN
 import com.example.tinntest.viewModel.AuthorizationViewModel
 
 @Composable
@@ -29,16 +32,16 @@ fun VerificationEmailScreen(navController: NavController) {
     val emailIsVerificated by viewModel.emailIsVerificated.observeAsState(false)
 
     val token = LocalContext.current.getSharedPreferences(
-        "authorization", ComponentActivity.MODE_PRIVATE
-    ).getString("token", "")
+        AUTHORIZATION, ComponentActivity.MODE_PRIVATE
+    ).getString(TOKEN, "")
 
     if (emailIsVerificated) {
         val context = LocalContext.current
         val pref = context.applicationContext.getSharedPreferences (
-            "authorization",
+            AUTHORIZATION,
             Context.MODE_PRIVATE
         )
-        pref.edit().putBoolean("emailIsConfirmed", true).apply()
+        pref.edit().putBoolean(EMAIL_IS_CONFIRMATION, true).apply()
 
         navController.navigate(Screens.Main.route) {
             popUpTo(navController.graph.startDestinationId) {

@@ -20,6 +20,8 @@ import com.example.tinntest.ui.components.TextFieldEmail
 import com.example.tinntest.ui.components.TextFieldPassword
 import com.example.tinntest.ui.components.TextFieldsWithLabelError
 import com.example.tinntest.ui.navigation.Screens
+import com.example.tinntest.utils.AUTHORIZATION
+import com.example.tinntest.utils.TOKEN
 import com.example.tinntest.utils.emailIfValid
 import com.example.tinntest.viewModel.AuthorizationViewModel
 
@@ -31,10 +33,10 @@ fun RegisterScreen(navController: NavController) {
     if (token != "") {
         val context = LocalContext.current
         val pref = context.applicationContext.getSharedPreferences (
-            "authorization",
+            AUTHORIZATION,
             Context.MODE_PRIVATE
         )
-        pref.edit().putString("token", token).apply()
+        pref.edit().putString(TOKEN, token).apply()
 
         navController.navigate(Screens.ConfirmEmail.route) {
             popUpTo(navController.graph.startDestinationId) {

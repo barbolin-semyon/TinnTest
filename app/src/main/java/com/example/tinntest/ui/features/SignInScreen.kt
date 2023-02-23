@@ -25,6 +25,9 @@ import com.example.tinntest.ui.components.TextFieldEmail
 import com.example.tinntest.ui.components.TextFieldPassword
 import com.example.tinntest.ui.navigation.Screens
 import com.example.tinntest.ui.theme.Gray
+import com.example.tinntest.utils.AUTHORIZATION
+import com.example.tinntest.utils.EMAIL_IS_CONFIRMATION
+import com.example.tinntest.utils.TOKEN
 import com.example.tinntest.utils.emailIfValid
 import com.example.tinntest.viewModel.AuthorizationViewModel
 
@@ -36,11 +39,11 @@ fun SignInScreen(navHostController: NavHostController) {
     if (token != "") {
         val context = LocalContext.current
         val pref = context.applicationContext.getSharedPreferences (
-            "authorization",
+            AUTHORIZATION,
             Context.MODE_PRIVATE
         )
-        pref.edit().putString("token", token).apply()
-        pref.edit().putBoolean("emailIsConfirmed", true).apply()
+        pref.edit().putString(TOKEN, token).apply()
+        pref.edit().putBoolean(EMAIL_IS_CONFIRMATION, true).apply()
 
         navHostController.navigate(Screens.Main.route) {
             popUpTo(navHostController.graph.startDestinationId) {

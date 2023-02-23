@@ -13,6 +13,9 @@ import androidx.navigation.compose.rememberNavController
 import com.example.tinntest.ui.navigation.AppNavHost
 import com.example.tinntest.ui.navigation.Screens
 import com.example.tinntest.ui.theme.TinnTestTheme
+import com.example.tinntest.utils.AUTHORIZATION
+import com.example.tinntest.utils.EMAIL_IS_CONFIRMATION
+import com.example.tinntest.utils.TOKEN
 import com.example.tinntest.viewModel.ErrorObserver
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import kotlinx.coroutines.launch
@@ -26,12 +29,12 @@ class MainActivity : ComponentActivity() {
                 stateUI.setStatusBarColor(MaterialTheme.colors.background)
 
                 val token = LocalContext.current.getSharedPreferences(
-                    "authorization", MODE_PRIVATE
-                ).getString("token", "")
+                    AUTHORIZATION, MODE_PRIVATE
+                ).getString(TOKEN, "")
 
                 val isConfirmEmail = LocalContext.current.getSharedPreferences(
-                    "authorization", MODE_PRIVATE
-                ).getBoolean("isConfirmEmail", false)
+                    AUTHORIZATION, MODE_PRIVATE
+                ).getBoolean(EMAIL_IS_CONFIRMATION, false)
 
                 val startDestination = getStartDestination(token, isConfirmEmail)
 
