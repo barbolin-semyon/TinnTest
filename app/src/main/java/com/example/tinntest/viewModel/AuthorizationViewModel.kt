@@ -15,9 +15,9 @@ import retrofit2.Call
 import retrofit2.Response
 
 class AuthorizationViewModel : ViewModel() {
-    private val _requestIsSuccess = MutableLiveData(false)
-    val requestIsSuccess: LiveData<Boolean>
-        get() = _requestIsSuccess
+    private val _token = MutableLiveData("")
+    val token: LiveData<String>
+        get() = _token
 
     private val db = RetrofitClient.getRetrofitService().create(AuthorizationService::class.java)
 
@@ -30,7 +30,7 @@ class AuthorizationViewModel : ViewModel() {
             override fun onResponse(call: Call<ResponceModel>, response: Response<ResponceModel>) {
                 response.body()?.let { body ->
                     if (body.success) {
-                        _requestIsSuccess.value = true
+                        _token.value = body.data.token
                     } else {
                         val data = body.data
                         showArrayError(data.email)
@@ -54,7 +54,7 @@ class AuthorizationViewModel : ViewModel() {
                 ) {
                     response.body()?.let { body ->
                         if (body.success) {
-                            _requestIsSuccess.value = true
+                            _token.value = body.data.token
                         } else {
                             val data = body.data
                             showArrayError(data.email)
