@@ -19,6 +19,7 @@ data class ResponceModel(
 )
 
 data class ResponceDataModel(
+    val token: String = "",
     val email: Array<String> = emptyArray(),
     val password: Array<String> = emptyArray(),
     val code: Array<String> = emptyArray(),
