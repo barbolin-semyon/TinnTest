@@ -6,6 +6,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.tinntest.ui.features.MainScreen
 import com.example.tinntest.ui.features.RegisterScreen
 import com.example.tinntest.ui.features.SignInScreen
 import com.example.tinntest.ui.features.VerificationEmailScreen
@@ -34,7 +35,7 @@ fun AppNavHost(
         }
 
         composable(Screens.Main.route) {
-
+            MainScreen()
         }
     }
 }
