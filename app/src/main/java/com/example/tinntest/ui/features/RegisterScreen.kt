@@ -70,7 +70,7 @@ fun RegisterScreen(navController: NavController) {
         TextFieldPassword(
             password = repeatPassword,
             onValueChange = { repeatPassword = it },
-            isError = password == repeatPassword && password.isNotEmpty(),
+            isError = password != repeatPassword && password.isNotEmpty(),
             errorText = "Пароли не совпадают",
             labelText = "Повторите пароль"
         )
@@ -84,7 +84,7 @@ fun RegisterScreen(navController: NavController) {
         AppButton(
             modifier = Modifier.padding(top = 8.dp),
             onClick = { viewModel.register(email, password, code) },
-            enabled = email.emailIfValid() && password.length >= 8,
+            enabled = email.emailIfValid() && password.length >= 8 && password == repeatPassword,
             text = "Продолжить"
         )
     }
