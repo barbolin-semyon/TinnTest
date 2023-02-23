@@ -74,8 +74,8 @@ class AuthorizationViewModel : ViewModel() {
             })
     }
 
-    fun verificationEmail(code: String) = viewModelScope.launch {
-        db.verificationEmail(VerificationModel(code))
+    fun verificationEmail(code: String, token: String) = viewModelScope.launch {
+        db.verificationEmail(VerificationModel(code), "Bearer $token")
             .enqueue(object : Callback<ResponceVerificationModel> {
                 override fun onResponse(
                     call: Call<ResponceVerificationModel>,
