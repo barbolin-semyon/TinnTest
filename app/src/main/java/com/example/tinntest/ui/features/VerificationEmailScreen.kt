@@ -1,6 +1,7 @@
 package com.example.tinntest.ui.features
 
 import android.content.Context
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
@@ -26,6 +27,10 @@ import com.example.tinntest.viewModel.AuthorizationViewModel
 fun VerificationEmailScreen(navController: NavController) {
     val viewModel = viewModel(AuthorizationViewModel::class.java)
     val emailIsVerificated by viewModel.emailIsVerificated.observeAsState(false)
+
+    val token = LocalContext.current.getSharedPreferences(
+        "authorization", ComponentActivity.MODE_PRIVATE
+    ).getString("token", "")
 
     if (emailIsVerificated) {
         val context = LocalContext.current
@@ -79,7 +84,7 @@ fun VerificationEmailScreen(navController: NavController) {
 
         AppButton(
             modifier = Modifier.padding(top = 16.dp),
-            onClick = { viewModel.verificationEmail(code) },
+            onClick = { viewModel.verificationEmail(code, token!!) },
             enabled = code.isDigitsOnly() && code.isNotEmpty(),
             text = "Подтвердить"
         )
