@@ -4,9 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.tinntest.data.modelForJSON.RegisterModel
-import com.example.tinntest.data.modelForJSON.ResponceModel
-import com.example.tinntest.data.modelForJSON.SignInModel
+import com.example.tinntest.data.modelForJSON.*
 import com.example.tinntest.data.networkService.AuthorizationService
 import com.example.tinntest.data.networkService.RetrofitClient
 import retrofit2.Callback
@@ -18,6 +16,10 @@ class AuthorizationViewModel : ViewModel() {
     private val _token = MutableLiveData("")
     val token: LiveData<String>
         get() = _token
+
+    private val _emailIsVerificated = MutableLiveData(false)
+    val emailIsVerificated: LiveData<Boolean>
+        get() = _emailIsVerificated
 
     private val db = RetrofitClient.getRetrofitService().create(AuthorizationService::class.java)
 
@@ -45,6 +47,7 @@ class AuthorizationViewModel : ViewModel() {
 
         })
     }
+
     fun register(email: String, password: String, code: String) = viewModelScope.launch {
         db.register(RegisterModel(email, password, password, code))
             .enqueue(object : Callback<ResponceModel> {
@@ -67,6 +70,25 @@ class AuthorizationViewModel : ViewModel() {
                 override fun onFailure(call: Call<ResponceModel>, t: Throwable) {
                     ErrorObserver.showErrorMessage(t.message.toString())
                 }
+            })
+    }
+
+    fun verificationEmail(code: String) = viewModelScope.launch {
+        db.verificationEmail(VerificationModel(code))
+            .enqueue(object : Callback<ResponceVerificationModel> {
+                override fun onResponse(
+                    call: Call<ResponceVerificationModel>,
+                    response: Response<ResponceVerificationModel>
+                ) {
+                    response.body()?.let {
+                        _emailIsVerificated.value = it.getStatus()
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponceVerificationModel>, t: Throwable) {
+                    ErrorObserver.showErrorMessage(t.message.toString())
+                }
+
             })
     }
 }
