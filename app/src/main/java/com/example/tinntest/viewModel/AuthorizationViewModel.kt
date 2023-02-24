@@ -81,7 +81,8 @@ class AuthorizationViewModel : ViewModel() {
                     response: Response<ResponceVerificationModel>
                 ) {
                     response.body()?.let {
-                        _emailIsVerificated.value = it.getStatus()
+                        if (it.getStatus()) _emailIsVerificated.value = it.getStatus()
+                        else ErrorObserver.showErrorMessage("Код не верен")
                     }
                 }
 
