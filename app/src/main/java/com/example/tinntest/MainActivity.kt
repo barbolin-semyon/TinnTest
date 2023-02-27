@@ -62,7 +62,8 @@ private fun ObserverErrorMessage(snackBarState: SnackbarHostState) {
 
     LaunchedEffect(key1 = message, block = {
         message?.let {
-            if (it.isNotEmpty()) snackBarState.showSnackbar(it)
+            val message = it.getMessage()
+            if (message.isNotEmpty()) snackBarState.showSnackbar(message)
         }
     })
 }
